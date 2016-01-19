@@ -1,0 +1,24 @@
+Welcome to Scrobble!
+Where trivium and strategy come together in an epic battle of wits!
+
+You will find everything you need to know about how to play here!
+
+Goal:
+
+Get the most points with the most creative (and longest) words.
+
+Instructions:
+
+Players take turns placing one tile at a time anywhere on the board.
+When placing tiles, players take turns trying to build words or blocking their
+opponent's words.
+
+To test or claim a word, the player must click on each tile used in the 
+creation of that word and then press the End Turn button. 
+If it is a valid word points will be awarded based off of both the difficulty and 
+the length of the word formed.
+
+The game will continue until one of two things happens. Either there are no more spaces
+for tiles to be played on or there are no more tiles remaining in the draw pile.
+
+The player with the most points wins.
