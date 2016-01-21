@@ -1,14 +1,11 @@
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.List;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-
-import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -36,6 +33,7 @@ public class Game {
 	private int startRandomizer = random.nextInt(2);
 	private ArrayList<Integer> tempList;
 	private String music_folder = "rec/music/";
+	
 	public Game() {
 		judge = new Judge();
 		pile = new Deck();
@@ -98,7 +96,7 @@ public class Game {
 			m = false;
 			switch(step){
 				case(1):			//select spot from hand
-					if(tempCell!=null)
+					if(tempCell!=null && play_board.clickCheck(e)!=null)
 					{
 						tempBoardCell = play_board.clickCheck(e);
 						if(tempBoardCell.getTile()==null)
@@ -109,7 +107,6 @@ public class Game {
 								clip.open(audioInputStream);
 								clip.start();
 								} catch  (IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
-									// TODO Auto-generated catch block
 									ex.printStackTrace();
 								}
 							play_board.addTile(tempBoardCell, tempCell.getTile());
@@ -118,8 +115,7 @@ public class Game {
 								player_one.remove(tempCell);
 							else
 								player_two.remove(tempCell);
-							step++;
-							//tempBoardCell = null;
+							++step;
 						}
 						if(turn)
 							player_one.setHandOpacity(1f);
@@ -130,11 +126,13 @@ public class Game {
 						if(turn)
 						{
 							tempCell = player_one.clickCheck(e);
+							player_one.setHandOpacity(1f);
 							player_one.getHand().get(player_one.getHand().indexOf(tempCell)-1).setOpacity(.6f);
 						}
 						else
 						{
 							tempCell = player_two.clickCheck(e);
+							player_two.setHandOpacity(1f);
 							player_two.getHand().get(player_two.getHand().indexOf(tempCell)-1).setOpacity(.6f);
 						}
 					}
@@ -144,7 +142,7 @@ public class Game {
 					guiEnabler = true;
 					if(gui.clickCheck(e))
 					{
-						step++;
+						++step;
 						m = true;
 					}
 					else
@@ -157,7 +155,6 @@ public class Game {
 								System.out.println("verify accepted");
 								tempList.add(tempBoardCell.getSpotNum());
 								Collections.sort(tempList);
-								//step++;
 							}
 							else
 							{
@@ -165,14 +162,14 @@ public class Game {
 								tempBoardCell = null;
 							}
 						if(gui.clickCheck(e))
-							step++;
+							++step;
 						}
 						else
 							System.out.println("invalid selection");
 						break;
 					}
 				case(3):			//submit word to judge
-						step++;
+						++step;
 						if(tempList!=null)
 						{
 							ArrayList<Tile> tempListAlt = listConvert(tempList);
@@ -237,7 +234,6 @@ public class Game {
 		{
 			if(tempList.get(0)+7==spotNum||tempList.get(0)-7==spotNum)
 				return true;
-			//else if(tempList.get(0)%7-spotNum%7 == -1||tempList.get(0)%7-spotNum%7 == 1)
 			else
 			{
 				if((tempList.get(0)-1)%7-(spotNum-1)%7 == -1||(tempList.get(0)-1)%7-(spotNum-1)%7 == 1)
@@ -250,7 +246,6 @@ public class Game {
 		}
 		else
 		{
-			//if(tempList.get(0)%7-tempList.get(1)%7==-1||tempList.get(0)%7-tempList.get(1)%7==1)
 			if(tempList.get(0)+7==tempList.get(1)||tempList.get(0)-7==tempList.get(1))
 			{
 				if(tempList.get(0)-7==spotNum||tempList.get(tempList.size()-1)+7==spotNum)
@@ -266,6 +261,7 @@ public class Game {
 			return false;
 		}
 	}
+	
 	public int getPlayerScore(boolean opt){
 		if(opt)
 			return player_one.getScore();
