@@ -1,3 +1,10 @@
+/**
+ * This code was created by
+ * Edited by Omar Alamoudi
+ * */
+/*
+ * Import related libraries
+ * */
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,26 +20,39 @@ public class Deck {
 	private Map<Tile,Integer> alphabet;
 	private String dataFile = "rec/tile.data";
 	
-
+    /**
+     * Starts a Deck with shuffled tiles
+     * */
 	public Deck() {
-		deck = new CopyOnWriteArrayList<Tile>();
-		generate_alphabet();
-		shuffle();
+        // Setup the deck
+		this.deck = new CopyOnWriteArrayList<Tile>();
+        // generate the alphabet tiles
+		this.generate_alphabet();
+        // shuffle the deck
+		this.shuffle();
 	}
 	
+    /**
+     * Generate the alphabet tile for the deck 
+     * */
 	private void generate_alphabet() {
-		alphabet = new HashMap<Tile,Integer>();
+		this.alphabet = new HashMap<Tile,Integer>();
 		
 		this.dataHandling();
 		for(Map.Entry<Tile,Integer> u: alphabet.entrySet())
 		{
 			for(int x = 1; x <= u.getValue();x++)
-				deck.add(u.getKey());
+				this.deck.add(u.getKey());
 		}
 	}
 	
+    /**
+     * Reading the tiles values from the data file tile.data
+     * ading the tiles to the alphabet collection
+     * */
 	private  void dataHandling(){
-		String line = null;
+		// initiate line variable
+        String line = null;
 		
 		
 		try {
@@ -43,10 +63,17 @@ public class Deck {
             // Always wrap FileReader in BufferedReader.
             BufferedReader bufferedReader = 
                 new BufferedReader(fileReader);
+            // initiate the part of the line string array
             String[] parts;
+            // if there is a line in the folder continue
             while((line = bufferedReader.readLine()) != null) {
+                // Store an array of line parts
                 parts= line.split(",");
-                alphabet.put(new Tile(parts[0].charAt(0),Integer.parseInt(parts[1])), Integer.parseInt(parts[2]));
+                /*
+                 * Adding elements to the alphabet hashMap in this form
+                 * this.alphabet.put( new Tile ( <alphabet character>, <alphabet score>), <alphabet occurrence>);
+                 * */
+                this.alphabet.put(new Tile(parts[0].charAt(0),Integer.parseInt(parts[1])), Integer.parseInt(parts[2]));
             }
 		}
         catch(FileNotFoundException ex) {
@@ -64,21 +91,35 @@ public class Deck {
 
 	}
 	
+
+    /**
+     * Shuffle the collection of the deck
+     * */
 	public void shuffle() {
-		Collections.shuffle(deck);
+		Collections.shuffle(this.deck);
 	}
 	
+    /**
+     * Add a card to the deck
+     * @param card as tile 
+     * */
 	private void addCard(Tile card) {
-		deck.add(card);
+		this.deck.add(card);
 	}
-	
+	/**
+     * Remove tile from deck
+     * 
+     * */
 	public Tile remove() {
-		return deck.remove(0);
+		return this.deck.remove(0);
 	}
 	
-	
+	/**
+     * Check if the deck is empty
+     * @return true if deck is empty, false if deck hold something
+     * */
 	public boolean isEmpty() {
-		if (deck.isEmpty()) {
+		if (this.deck.isEmpty()) {
 			return true;
 		}
 		return false;
