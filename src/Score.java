@@ -24,10 +24,26 @@ public class Score {
 		calculate_score();
 		return this.score;
 	}
+<<<<<<< HEAD
 	
     /**
      * reset the score to 0
      * */
+=======
+	public int getPointsLocal(List<Tile> list){
+		int aScore = calculate_score_local(list);
+		return aScore;
+	}
+	private int calculate_score_local(List<Tile> list){
+		int aScore = 0;
+		for(Tile tile: list){
+			aScore += tile.getScore();
+//			System.out.println("here, score= "+this.score);
+		}
+		aScore += list.size()-4;
+		return aScore;
+	}
+>>>>>>> 744191db0b3296cbd0212ab960b12b8b05a0b971
 	public void reset(){
 		this.score=0;
 	}

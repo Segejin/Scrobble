@@ -52,8 +52,9 @@ public class Spot {
 	public void displayTile(Graphics g) {
 		if(tile!=null)
 		{
-			g.drawImage(tile.getImg(),(int)(locX*.7), (int)(locY*.7), null);
 			((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+			g.drawImage(tile.getImg(),(int)(locX*.7), (int)(locY*.7), null);
+			((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
 		}
 		
 	}
@@ -66,6 +67,15 @@ public class Spot {
 	}
 	public int getSpotNum(){
 		return spotNum;
+	}
+	public void displayTile(Graphics g, float f) {
+		if(tile!=null)
+		{
+			((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, f));
+			g.drawImage(tile.getImg(),(int)(locX*.7), (int)(locY*.7), null);
+			((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
+		}
+		
 	}
 
 }

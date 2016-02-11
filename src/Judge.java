@@ -51,5 +51,9 @@ public class Judge{
 		return this.dict.contains(this.word);
 	}
 	
+	public boolean getResult(String aString)
+	{
+		return dict.contains(aString);
+	}
 	
 }

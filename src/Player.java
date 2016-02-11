@@ -23,9 +23,9 @@ public class Player {
 		scoreGen = new Score();
 		float x = 16;
 		int y = 790;
-		for(int j = 0; j<7;j++)
+		for(int j = 1; j<8;j++)
 		{
-			hand.add(new Spot(x,y,null,49+j+1));
+			hand.add(new Spot(x,y,null,48+j));
 			x+=107.2;
 		}
 		score = 0;
