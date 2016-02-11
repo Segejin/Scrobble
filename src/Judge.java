@@ -1,3 +1,7 @@
+/**
+ * This code was created by Omar Alamoudi
+ * edited by
+ * */
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +11,18 @@ public class Judge{
 	private String fileName = "rec/US.dic";
 	private String word;
 	private List<String> dict = new ArrayList<String>();
-	public Judge(){
+	/**
+     * Create judge instanse 
+     * */
+    public Judge(){
 		this.dictHandling();
 	}
 	
+    /**
+     * Read the dictionary from a file and save it in a dict list 
+     * */
 	private  void dictHandling(){
+        // initiate line containor
 		String line = null;
 		try {
             // FileReader reads text files in the default encoding.
@@ -23,7 +34,9 @@ public class Judge{
                 new BufferedReader(fileReader);
 
             while((line = bufferedReader.readLine()) != null) {
+                // skip all the words are less than 2 char
                 if (line.length() >2){
+                    // add a word to the dictionary list
                 	this.dict.add(line);
                 }
             }
@@ -43,6 +56,12 @@ public class Judge{
 
 	}
 	
+    /**
+     * Get the result if the tile list forming the word is in dictionary
+     * @param tiles is a list of tiles forming a word
+     * @return true if word exists
+     * @return false if word doesn't exists in dictionary
+     * */
 	public boolean getResult(List<Tile> tiles){
 		this.word = "";
 		for (Tile tile : tiles){
@@ -51,9 +70,16 @@ public class Judge{
 		return this.dict.contains(this.word);
 	}
 	
-	public boolean getResult(String aString)
+    /**
+     * Get the result if word is in dictionary
+     * @param word is a word to combare with the dictionary
+     * @return true if word exists
+     * @return false if word doesn't exists in dictionary
+     * */
+	public boolean getResult(String word)
 	{
-		return dict.contains(aString);
+		this.word=word;
+        return this.dict.contains(this.word);
 	}
 	
 }
