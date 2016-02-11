@@ -1,3 +1,8 @@
+/*
+ * This code is created by 
+ * Documented by Omar Alamoudi
+ * */
+
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
@@ -5,10 +10,13 @@ import java.awt.event.MouseEvent;
 public class Board {
 
 	Spot board[][];
-	
+	/**
+     * Create 7x7 board for the game
+     * */
 	public Board()
 	{
-		board = new Spot[7][7];
+		// Create board size 7x7
+        this.board = new Spot[7][7];
 		float x = 16;
 		float y = 16;
 		int k = 0;
@@ -24,22 +32,48 @@ public class Board {
 			y+=107.2;
 		}
 	}
-	
+
+	/**
+     * Adding a tile to the board using the horizontal and 
+     * vertical location of the tile on the board
+     * @param x the horizontal location of the tile on the board
+     * @param y the vertical location of the tile on the board
+     * @param Tile the value of the added tile
+     * */
 	public void addTile(int x, int y, Tile aTile)
 	{
-		board[x][y].setTile(aTile);
-	}
-	public int removeTile(int x, int y)
-	{
-		int score = board[x][y].getTile().getScore();
-		board[x][y].setTile(null);
-		return score;
-	}
-	public Tile getTile(int x, int y)
-	{
-		return board[x][y].getTile();
+		this.board[x][y].setTile(aTile);
 	}
 
+    /**
+     * Remove a tile from the board using the horizontal and 
+     * vertical location of the tile on the board
+     * @param x the horizontal location of the tile on the board
+     * @param y the vertical location of the tile on the board
+     * @return the score of the tile
+     * */
+	public int removeTile(int x, int y)
+	{
+		int score = this.board[x][y].getTile().getScore();
+		this.board[x][y].setTile(null);
+		return score;
+	}
+
+    /**
+     * Get the by using the horizontal and vertical location of 
+     * the tile.
+     * @param x the horizontal location of the tile on the board
+     * @param y the vertical location of the tile on the board
+     * */
+	public Tile getTile(int x, int y)
+	{
+		return this.board[x][y].getTile();
+	}
+    
+    /**
+     * Indicate the spot number clicked on the board
+     * @param e is a mouse event
+     * */
 	public Spot clickCheck(MouseEvent e) {
 		for(Spot s[]: board)
 		{
@@ -55,18 +89,26 @@ public class Board {
 		return null;
 		
 	}
-
+    /**
+     * Display board 
+     * @param g is a graphics object
+     * */
 	public void displayBoard(Graphics g) {
 		for(int i = 0; i<7;i++)
 		{
 			for(int j = 0; j<7;j++)
 			{
-				board[j][i].displayTile(g);
+				this.board[j][i].displayTile(g);
 			}
 		}
 		
 	}
-
+    
+    /**
+     * Add tile to the board from sellcted tile
+     * @param tempBoardCell spot object 
+     * @param tile tile objrct
+     * */
 	public void addTile(Spot tempBoardCell, Tile tile) {
 		int spotNum = tempBoardCell.getSpotNum();
 		for(Spot s[]: board)
@@ -83,34 +125,51 @@ public class Board {
 		
 		
 	}
-
+    
+    /**
+     * get the tile by the spot number 
+     * @param x int represent tile spot number
+     * @return tile at spot x if exists in the board 
+     * @return null if tile cannot be found at the indicated spot x 
+     * */
 	public Tile getTile(int x) {
 		for(int i = 0; i<7;i++)
 		{
 			for(int j = 0; j<7;j++)
 			{
-				if(board[j][i].getSpotNum()==x)
-					return board[j][i].getTile();
+				if(this.board[j][i].getSpotNum()==x)
+					return this.board[j][i].getTile();
 			}
 		}
 		return null;
 	}
+
+    /**
+     * Remove Tile at spot number
+     * @param x int represent tile spot number
+     * */
 	public void removeTile(int x) {
 		for(int i = 0; i<7;i++)
 		{
 			for(int j = 0; j<7;j++)
 			{
-				if(board[j][i].getSpotNum()==x)
-					board[j][i].setTile(null);
+				if(this.board[j][i].getSpotNum()==x)
+					this.board[j][i].setTile(null);
 			}
 		}
 	}
+    
+    /**
+     * Check if the board is full
+     * @return false if the board is not full
+     * @return true if the board is full
+     * */
 	public boolean isFull() {
 		for(int i = 0; i<7;i++)
 		{
 			for(int j = 0; j<7;j++)
 			{
-				if(board[j][i].getTile() == null)
+				if(this.board[j][i].getTile() == null)
 					return false;
 			}
 		}
