@@ -25,6 +25,6 @@ What's next for Scrobble?
 If Scrobble were to continue, we would implement a networking system to be able to play other people on different computers. We would add a wild card and a past log of words that were previously played. Perhaps make a mobile phone application and highlighting the tiles that the players choose on the board.
 
 ##contributors
-* Cres Brooks @CBrooks12 lead programmer
-* Craig Tottin @Segejin programmer
+* Chris Brooks @CBrooks12 lead programmer
+* Craig Totten @Segejin programmer
 * Omar Alamoudi @Oalamoud programmer
