@@ -90,23 +90,18 @@ public class Board {
 		return null;
 		
 	}
-<<<<<<< HEAD
+
     /**
      * Display board 
      * @param g is a graphics object
+     * @param tempList an integer arraylist 
      * */
-	public void displayBoard(Graphics g) {
-=======
 
 	public void displayBoard(Graphics g, ArrayList<Integer> tempList) {
->>>>>>> 744191db0b3296cbd0212ab960b12b8b05a0b971
 		for(int i = 0; i<7;i++)
 		{
 			for(int j = 0; j<7;j++)
 			{
-<<<<<<< HEAD
-				this.board[j][i].displayTile(g);
-=======
 				if(tempList!=null)
 				{
 					if(tempList.contains(board[j][i].getSpotNum()))
@@ -116,7 +111,6 @@ public class Board {
 				}
 				else
 					board[j][i].displayTile(g);
->>>>>>> 744191db0b3296cbd0212ab960b12b8b05a0b971
 			}
 		}		
 	}
