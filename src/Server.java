@@ -1,3 +1,7 @@
+/**
+ * This code was created by
+ * Documented by Omar Alamoudi
+ * */
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -39,6 +43,9 @@ public class Server implements Runnable {
         }
     }
     
+    /**
+     * Server initiating 
+     * */
     public Server() {
         if(!Server.isRunning) {
             runServer();
@@ -49,11 +56,17 @@ public class Server implements Runnable {
             Server.isRunning = true;
         }
     }
-
+    
+    /**
+     * Check if the server is runnung
+     * */
     public static boolean isRunning() {
         return isRunning;
     }
 
+    /**
+     * Run the server
+     * */
     private static void runServer() {
         try {
             serverSocket = new ServerSocket(port);
@@ -62,6 +75,9 @@ public class Server implements Runnable {
         }
     }
     
+    /**
+     * Run the server 
+     * */
     public void run() {
     	while(true) {
     		Socket socket;
@@ -79,11 +95,17 @@ public class Server implements Runnable {
     	}
     }
     
+    /**
+     * CLient class
+     * */
     private class Client implements Runnable {
         private Socket socket;
         public ObjectInputStream input;
         public ObjectOutputStream output;
-
+        
+        /**
+         * Establish connection with the server
+         * */
         Client(Socket socket, ObjectInputStream input, ObjectOutputStream output){
             this.socket = socket;
             this.input = input;
@@ -93,6 +115,9 @@ public class Server implements Runnable {
             thread.start();
         }
 
+        /**
+         * run the client
+         * */
         public void run() {
             while(true) {
                 try {
