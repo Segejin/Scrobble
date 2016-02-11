@@ -1,3 +1,7 @@
+/**
+ * This code created by
+ * Documented by Omar Alamoudi 
+ * */
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -18,37 +22,68 @@ public class Player {
 	private int tileLoc;
 	private Score scoreGen;
 	private String music_folder = "rec/music/";
+
+    /**
+     * Player initated with new hand
+     * */
 	public Player() {
-		hand = new ArrayList<Spot>();
-		scoreGen = new Score();
+		this.hand = new ArrayList<Spot>();
+		this.scoreGen = new Score();
 		float x = 16;
 		int y = 790;
 		for(int j = 1; j<8;j++)
 		{
-			hand.add(new Spot(x,y,null,48+j));
+			this.hand.add(new Spot(x,y,null,48+j));
 			x+=107.2;
 		}
-		score = 0;
+		this.score = 0;
 	}
 
+    /**
+     * Get hand
+     * @return hand a list of spots
+     * */
 	public List<Spot> getHand() {
-		return hand;
+		return this.hand;
 	}
 
-	public void addTile(int x, Tile aTile) {
-		hand.get(x).setTile(aTile);
+    /**
+     * Add a tile
+     * @param x int the position on hand
+     * @param tile Tile object 
+     * */
+	public void addTile(int x, Tile tile) {
+		this.hand.get(x).setTile(tile);
 	}
-	public void addTile(Tile aTile) {
-		hand.get(tileLoc).setTile(aTile);
+
+    /**
+     * Add a tile
+     * @param tile Tile object 
+     * */
+	public void addTile(Tile tile) {
+		this.hand.get(tileLoc).setTile(tile);
 	}
+
+    /**
+     * Get score
+     * @return score int
+     * */
 	public int getScore() {
-		return score;
+		return this.score;
 	}
 
-	public void setScore(int a_score) {
-		this.score += a_score;
+    /**
+     * Set score
+     * @param score int 
+     * */
+	public void setScore(int score) {
+		this.score += score;
 	}
 
+    /**
+     * Display hand
+     * @param g graphic object
+     * */
 	public void displayHand(Graphics g) {
 		for(Spot t: hand)
 		{
@@ -57,6 +92,10 @@ public class Player {
 		
 	}
 
+    /**
+     * check if clicked
+     * @param e mouse event
+     * */
 	public Spot clickCheck(MouseEvent e) {
 		for(Spot cell: hand)
 		{
@@ -79,6 +118,10 @@ public class Player {
 		
 	}
 
+    /**
+     * Remove tile from hand
+     * @param tempCell temperery spot 
+     * */
 	public void remove(Spot tempCell) {
 		//hand.remove(tempCell);
 
@@ -87,12 +130,20 @@ public class Player {
 		//return tempCell;
 	}
 
+    /**
+     * Set score removal
+     * @param tileList arrayList of tiles
+     * */
 	public void setScoreRemoval(ArrayList<Tile> tileList) {
 		setScore(scoreGen.getPoints(tileList));
 		scoreGen.reset();
 		
 	}
-
+    
+    /**
+     * Set hand opacity
+     * @param aFloat
+     * */
 	public void setHandOpacity(float aFloat) {
 		for(Spot s: hand)
 		{
