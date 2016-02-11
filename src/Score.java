@@ -15,7 +15,19 @@ public class Score {
 		calculate_score();
 		return this.score;
 	}
-	
+	public int getPointsLocal(List<Tile> list){
+		int aScore = calculate_score_local(list);
+		return aScore;
+	}
+	private int calculate_score_local(List<Tile> list){
+		int aScore = 0;
+		for(Tile tile: list){
+			aScore += tile.getScore();
+//			System.out.println("here, score= "+this.score);
+		}
+		aScore += list.size()-4;
+		return aScore;
+	}
 	public void reset(){
 		this.score=0;
 	}

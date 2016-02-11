@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 
 public class Board {
@@ -16,8 +17,8 @@ public class Board {
 		{
 			for(int j = 0; j<7;j++)
 			{
-				k+=1;
 				board[j][i] = new Spot(x,y,null,k);
+				k+=1;
 				x+=107.2;
 			}
 			x=16;
@@ -56,15 +57,22 @@ public class Board {
 		
 	}
 
-	public void displayBoard(Graphics g) {
+	public void displayBoard(Graphics g, ArrayList<Integer> tempList) {
 		for(int i = 0; i<7;i++)
 		{
 			for(int j = 0; j<7;j++)
 			{
-				board[j][i].displayTile(g);
+				if(tempList!=null)
+				{
+					if(tempList.contains(board[j][i].getSpotNum()))
+						board[j][i].displayTile(g,.6f);
+					else
+						board[j][i].displayTile(g);
+				}
+				else
+					board[j][i].displayTile(g);
 			}
-		}
-		
+		}		
 	}
 
 	public void addTile(Spot tempBoardCell, Tile tile) {

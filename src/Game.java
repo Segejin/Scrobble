@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -34,7 +35,9 @@ public class Game {
 	private ArrayList<Integer> tempList;
 	private String music_folder = "rec/music/";
 	
+	private Score score;
 	public Game() {
+		score = new Score();
 		judge = new Judge();
 		pile = new Deck();
 		player_one = new Player();
@@ -67,7 +70,7 @@ public class Game {
 	}
 
 	public boolean updateGame(Graphics g) {
-		play_board.displayBoard(g);
+		play_board.displayBoard(g,tempList);
 		if(turn) {
 			gui.displayTurnOne(g);
 			player_one.displayHand(g);
@@ -94,12 +97,13 @@ public class Game {
 		while(m==true)
 		{
 			m = false;
+			//int tempIndex = 0;
 			switch(step){
 				case(1):			//select spot from hand
-					if(tempCell!=null && play_board.clickCheck(e)!=null)
+					if(tempCell!=null && play_board.clickCheck(e)!=null)		//if spot in hand is picked and a valid spot on the board is clicked
 					{
 						tempBoardCell = play_board.clickCheck(e);
-						if(tempBoardCell.getTile()==null)
+						if(tempBoardCell.getTile()==null)						//if board tile is null (open space)
 						{
 							try {
 								AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(this.music_folder + "tiledrop.wav"));
@@ -110,64 +114,96 @@ public class Game {
 									ex.printStackTrace();
 								}
 							play_board.addTile(tempBoardCell, tempCell.getTile());
+																				//add tile to board
 							tempList.add(tempBoardCell.getSpotNum());
-							if(turn)
+							if(turn)											//remove from hand
 								player_one.remove(tempCell);
 							else
 								player_two.remove(tempCell);
 							++step;
 						}
-						if(turn)
+						if(turn)												//set hand opacity to 1
 							player_one.setHandOpacity(1f);
 						else
 							player_two.setHandOpacity(1f);
 					}
 					else{
-						if(turn)
+						if(turn)												//set tile as selected with opacity .6
 						{
 							tempCell = player_one.clickCheck(e);
 							player_one.setHandOpacity(1f);
-							player_one.getHand().get(player_one.getHand().indexOf(tempCell)-1).setOpacity(.6f);
+							//tempIndex = player_one.getHand().indexOf(tempCell);
+							player_one.getHand().get(player_one.getHand().indexOf(tempCell)).setOpacity(.6f);
+							
 						}
 						else
 						{
 							tempCell = player_two.clickCheck(e);
 							player_two.setHandOpacity(1f);
-							player_two.getHand().get(player_two.getHand().indexOf(tempCell)-1).setOpacity(.6f);
+							//tempIndex = player_two.getHand().indexOf(tempCell);
+							player_two.getHand().get(player_two.getHand().indexOf(tempCell)).setOpacity(.6f);
 						}
 					}
+					updateWord(tempList);
 					break;
-				case(2):			//select spot on board
+				case(2):
 					handEnabler = false;
 					guiEnabler = true;
-					if(gui.clickCheck(e))
+					if(gui.clickCheckEnd(e))
 					{
 						++step;
 						m = true;
 					}
+					else if(gui.clickCheckUndo(e))
+					{
+						--step;
+						handEnabler = true;
+						guiEnabler = false;
+						if(turn)											//add to hand
+							player_one.addTile(tempBoardCell.getTile());
+						else
+							player_two.addTile(tempBoardCell.getTile());
+						play_board.addTile(tempBoardCell, null);
+						tempCell = null;
+						//tempIndex = 0;
+						tempBoardCell = null;
+						tempList.clear();
+						break;
+					}
 					else
 					{
-						tempBoardCell = play_board.clickCheck(e);
-						if(tempBoardCell.getTile()!=null)
+						//tempBoardCell = play_board.clickCheck(e);
+						//if(tempBoardCell.getTile()!=null)
+						if(play_board.clickCheck(e)!=null)
 						{
-							if(verifySpot(tempBoardCell.getSpotNum()))
+							if(verifySpot(play_board.clickCheck(e).getSpotNum()))
 							{
 								System.out.println("verify accepted");
-								tempList.add(tempBoardCell.getSpotNum());
+								tempList.add(play_board.clickCheck(e).getSpotNum());
 								Collections.sort(tempList);
+							}
+							else if(tempList.contains(play_board.clickCheck(e).getSpotNum()))
+							{
+								if(play_board.clickCheck(e).getSpotNum()!=tempBoardCell.getSpotNum())
+								{
+									tempList.remove(tempList.indexOf(play_board.clickCheck(e).getSpotNum()));
+									System.out.println("removal accepted");
+								}
 							}
 							else
 							{
 								System.out.println("selected a bad tile");
-								tempBoardCell = null;
+								//tempBoardCell = null;
 							}
-						if(gui.clickCheck(e))
+						updateWord(tempList);
+						if(gui.clickCheckEnd(e))
 							++step;
 						}
 						else
 							System.out.println("invalid selection");
 						break;
 					}
+					//break;
 				case(3):			//submit word to judge
 						++step;
 						if(tempList!=null)
@@ -213,9 +249,30 @@ public class Game {
 					break;
 			}
 		}
+		updateWord(tempList);
 		gui.updateScore(player_one.getScore(), player_two.getScore());
 	}
-
+	private void updateWord(ArrayList<Integer> aTempList)
+	{
+		String word = getSelectedString(aTempList);
+		int wordScore = 0;
+		boolean aFlag = false;
+		if(judge.getResult(word))
+		{
+			aFlag = true;
+			wordScore = score.getPointsLocal(listConvert(aTempList));
+		}
+		gui.updateWordCheck(word,wordScore,aFlag);
+	}
+	private String getSelectedString(ArrayList<Integer> aTempList)
+	{
+		String word = "";
+		ArrayList<Tile> tiles = listConvert(aTempList);
+		for (Tile tile : tiles){
+			word += tile.getLetter();
+		}
+		return word;
+	}
 	private ArrayList<Tile> listConvert(ArrayList<Integer> aTempList) {
 		ArrayList<Tile> tempTileList = new ArrayList<Tile>();
 		for(int x: aTempList)
