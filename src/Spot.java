@@ -1,3 +1,7 @@
+/**
+ * This code created by 
+ * Documented by Omar Alamoudi
+ * */
 import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,41 +20,105 @@ public class Spot {
 	private Tile tile;
 	private Shape square;
 	private int spotNum;
+
+    /**
+     * Creating spot object
+     * */
 	public Spot()
 	{
 		locX = 0;
 		locY = 0;
-		tile = null;
+		this.tile = null;
 		square = null;
-		spotNum = 0;
+		this.spotNum = 0;
 		opacity = 1;
 	}
-	public Spot(float x,float y, Tile aTile,int aSpotNum)
+    
+    /**
+     * Creating spot object with parameter
+     * @param x the horizontal location of the tile
+     * @param y the vertical location of the tile
+     * @param tile the tile wanted to locate
+     * @param spotNum the number of the spot 
+     * */
+	public Spot(float x,float y, Tile tile,int spotNum)
 	{
 		locX = x;
 		locY = y;
-		tile = aTile;
+		this.tile = tile;
 		square = new Rectangle2D.Float(x*.7f, y*.7f,105*.7f, 105*.7f);
-		spotNum = aSpotNum;
+		this.spotNum = spotNum;
 		opacity = 1;
 	}
 	
 
-	
+	/*
+     * list of setters and getters
+     * */
+
+    /**
+     * Get location x
+     * @return location of x
+     * */
 	public float getLocX() {
-		return locX;
+		return this.locX;
 	}
+
+    /**
+     * Get location y
+     * @return location of y
+     * */
 	public float getLocY() {
-		return locY;
+		return this.locY;
 	}
+
+    /**
+     * Get tile
+     * @return tile
+     * */
 	public Tile getTile() {
-		return tile;
+		return this.tile;
 	}
+	
+    /**
+     * Get shape
+     * @return square
+     * */
+    public Shape getShape(){
+		return this.square;
+	}
+	
+    /**
+     * Get spot number
+     * @return spot number
+     * */
+    public int getSpotNum(){
+		return spotNum;
+	}
+
+    /**
+     * Set tile
+     * @param tile 
+     * */
 	public void setTile(Tile tile) {
 		this.tile = tile;
 	}
-	public void displayTile(Graphics g) {
-		if(tile!=null)
+	
+    /**
+     * Set opacity
+     * @param opacity 
+     * */
+    public void setOpacity(float opacity)
+	{
+		this.opacity = opacity;
+	}
+    
+    /**
+     * Display a tile
+     * @param g graphic object
+     * */
+    public void displayTile(Graphics g) {
+		if(this.tile!=null)
 		{
 			((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
 			g.drawImage(tile.getImg(),(int)(locX*.7), (int)(locY*.7), null);
@@ -58,18 +126,14 @@ public class Spot {
 		}
 		
 	}
-	public void setOpacity(float aOpacity)
-	{
-		opacity = aOpacity;
-	}
-	public Shape getShape(){
-		return square;
-	}
-	public int getSpotNum(){
-		return spotNum;
-	}
-	public void displayTile(Graphics g, float f) {
-		if(tile!=null)
+	
+	/**
+     * Display a tile
+     * @param g graphic object
+     * @param f float
+     * */
+    public void displayTile(Graphics g, float f) {
+		if(this.tile!=null)
 		{
 			((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, f));
 			g.drawImage(tile.getImg(),(int)(locX*.7), (int)(locY*.7), null);
