@@ -24,7 +24,7 @@ public class Player {
 	private String music_folder = "rec/music/";
 
     /**
-     * Player initated with new hand
+     * Player initiated with new hand
      * */
 	public Player() {
 		this.hand = new ArrayList<Spot>();

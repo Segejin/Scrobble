@@ -46,7 +46,7 @@ public class Score {
      * Calculate the score of the list of tile
      * */
 	private void calculate_score(){
-        // itarate in the list of tile to get score value
+        // iterate in the list of tile to get score value
 		for(Tile tile: this.list){
             // Add the tile score to the total score
 			this.score += tile.getScore();
@@ -67,7 +67,7 @@ public class Score {
          * for example size = 6 bonus = 2
          * Decrease score if list is less than 4, 
          * by the size of the list -4
-         * for example size = 3 bunos= -1
+         * for example size = 3 bonus= -1
          **/   
 		this.score += this.list.size()-4;
 	}

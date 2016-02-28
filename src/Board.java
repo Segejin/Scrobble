@@ -105,7 +105,7 @@ public class Board {
 				if(tempList!=null)
 				{
 					if(tempList.contains(board[j][i].getSpotNum()))
-						board[j][i].displayTile(g,.6f);
+						board[j][i].displayTile(g,.6f,false);
 					else
 						board[j][i].displayTile(g);
 				}

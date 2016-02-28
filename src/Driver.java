@@ -4,6 +4,9 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.PointerInfo;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -21,7 +24,8 @@ import javax.swing.JFrame;
 
 
 public class Driver extends Applet implements Runnable, MouseListener {
-
+	
+	private static JFrame frame;
 	private Game game;
 	private Menu menu;
 	private Rules rules;
@@ -29,6 +33,7 @@ public class Driver extends Applet implements Runnable, MouseListener {
 	private Over over;
 	private Image img;
 	private boolean newGame = true;
+	private boolean mouseState = false;				//false = up
 	private String image_folder = "rec/image/";
 	private String music_folder = "rec/music/";
 	public enum GameState {
@@ -95,7 +100,6 @@ public class Driver extends Applet implements Runnable, MouseListener {
 			switch(gameState)
 			{
 				case MENU:
-					
 					break;
 				
 				case RULES:
@@ -134,6 +138,12 @@ public class Driver extends Applet implements Runnable, MouseListener {
 	private boolean updateGame() {
 		//if(game.boardUpdate())
 		//repaint();
+		//System.out.println("hi");
+		if(mouseState)
+		{
+			game.displayMovingTile(frame.getX(),frame.getY());
+		}
+		repaint();
 		return true;
 			
 		//}
@@ -154,8 +164,9 @@ public class Driver extends Applet implements Runnable, MouseListener {
 				g.drawImage(img, 0, 0, null);
 				break;
 			case GAME:
-				g.drawImage(img, 0, 0, null);
-				if(!game.updateGame(g)) {
+				if(!newGame)
+					g.drawImage(img, 0, 0, null);
+				if(!game.updateGame(g,mouseState)) {
 					gameState = GameState.OVER;
 					try {
 						img = ImageIO.read(new File(this.image_folder+"quit_menu.jpg"));
@@ -293,14 +304,22 @@ public class Driver extends Applet implements Runnable, MouseListener {
 			}
 		}
 		else {
-			game.clickCheck(e);
-			repaint();
+			if(game.clickCheck(e))
+				mouseState = true;
+			System.out.println("Mouse down");
 		}
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseReleased(MouseEvent e) {
+		if(gameState.equals(GameState.GAME))
+		{
+			System.out.println("Mouse up");
+			if(!mouseState)
+				return;
+			mouseState = false;
+			game.resetTile(e);
+		}
 		
 	}
 
@@ -337,7 +356,7 @@ public class Driver extends Applet implements Runnable, MouseListener {
 	}
 
 	public static void main(String[] args) throws IOException {
-		 JFrame frame = new JFrame();
+		 frame = new JFrame();
 		 frame.setSize((int)(856),(int)(700));
 		 Scanner in = new Scanner(System.in);
 		 final Applet applet = new Driver(in);

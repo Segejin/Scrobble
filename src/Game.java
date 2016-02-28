@@ -1,5 +1,9 @@
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.PointerInfo;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +16,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.SwingUtilities;
 
 
 public class Game {
@@ -69,7 +74,8 @@ public class Game {
 		return aPlayer;
 	}
 
-	public boolean updateGame(Graphics g) {
+	public boolean updateGame(Graphics g, boolean mouseState) {
+		//if(!mouseState)
 		play_board.displayBoard(g,tempList);
 		gui.updateDeckSize(pile.getSize());
 		if(turn) {
@@ -79,6 +85,8 @@ public class Game {
 			gui.displayTurnTwo(g);
 			player_two.displayHand(g);
 		}
+		if(mouseState)
+			displayMovingTile(g,mouseState);
 		gui.displayGui(g);
 		if(game_state == false)
 		{
@@ -88,12 +96,17 @@ public class Game {
 		return true;
 	}
 
+	private void displayMovingTile(Graphics g,boolean mouseState) {
+		tempCell.displayTile(g,(float).8,mouseState);
+		
+	}
+
 	public boolean boardUpdate() {
 		return false;
 	}
 
-	public void clickCheck(MouseEvent e) {
-		
+	public boolean clickCheck(MouseEvent e) {
+		boolean tempRet = false;
 		boolean m = true;
 		while(m==true)
 		{
@@ -127,6 +140,7 @@ public class Game {
 							player_one.setHandOpacity(1f);
 						else
 							player_two.setHandOpacity(1f);
+						tempRet = true;
 					}
 					else{
 						if(turn)												//set tile as selected with opacity .6
@@ -144,9 +158,11 @@ public class Game {
 							//tempIndex = player_two.getHand().indexOf(tempCell);
 							player_two.getHand().get(player_two.getHand().indexOf(tempCell)).setOpacity(.6f);
 						}
+						tempRet = true;
 					}
 					updateWord(tempList);
-					break;
+					return tempRet;
+					//break;
 				case(2):
 					handEnabler = false;
 					guiEnabler = true;
@@ -255,6 +271,7 @@ public class Game {
 		}
 		updateWord(tempList);
 		gui.updateScore(player_one.getScore(), player_two.getScore());
+		return false;
 	}
 	private void updateWord(ArrayList<Integer> aTempList)
 	{
@@ -328,6 +345,31 @@ public class Game {
 			return player_one.getScore();
 		else
 			return player_two.getScore();
+	}
+
+	public void displayMovingTile(int m, int n) {
+		PointerInfo a = MouseInfo.getPointerInfo();
+		int x =a.getLocation().x - m;
+		int y =a.getLocation().y - n;
+		System.out.println("x: " + a.getLocation().getX() + " y: " + a.getLocation().getY());
+		try {
+			tempCell.displayMovedTile(x,y);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+	}
+
+	public void resetTile(MouseEvent e) {
+		try {
+			if(!clickCheck(e))
+				tempCell.displayMovedTile(0, 0);
+		} catch (Exception ao1) {
+			// TODO Auto-generated catch block
+			ao1.printStackTrace();
+		}
+		
 	}
 
 }

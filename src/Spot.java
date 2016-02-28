@@ -6,6 +6,7 @@ import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
@@ -16,6 +17,8 @@ import javax.imageio.ImageIO;
 public class Spot {
 	private float locX;
 	private float locY;
+	private float tempLocX;
+	private float tempLocY;
 	private float opacity;
 	private Tile tile;
 	private Shape square;
@@ -28,6 +31,8 @@ public class Spot {
 	{
 		locX = 0;
 		locY = 0;
+		tempLocX = 0;
+		tempLocY = 0;
 		this.tile = null;
 		square = null;
 		this.spotNum = 0;
@@ -118,27 +123,67 @@ public class Spot {
      * @param g graphic object
      * */
     public void displayTile(Graphics g) {
+    	float dispX;
+    	float dispY;
 		if(this.tile!=null)
 		{
+			if(tempLocX!= -1)
+			{
+				dispX = locX;
+				dispY = locY;
+			}
+			else
+			{
+				dispX = tempLocX;
+				dispY = tempLocY;
+			}
 			((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-			g.drawImage(tile.getImg(),(int)(locX*.7), (int)(locY*.7), null);
+			g.drawImage(tile.getImg(),(int)(dispX*.7), (int)(dispY*.7), null);
 			((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
 		}
 		
 	}
-	
+    public void displayMovedTile(int m, int n) {
+		tempLocX = (float) m - 32;
+		tempLocY = (float) n - 32;
+	}
 	/**
      * Display a tile
      * @param g graphic object
      * @param f float
      * */
-    public void displayTile(Graphics g, float f) {
-		if(this.tile!=null)
-		{
-			((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, f));
+    public void displayTile(Graphics g, float f, boolean mouseState) {
+    	if(!mouseState)
+    	{
+    		((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, f));
 			g.drawImage(tile.getImg(),(int)(locX*.7), (int)(locY*.7), null);
 			((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
+    		return;
+    	}
+    	float dispX;
+    	float dispY;
+		if(this.tile!=null)
+		{
+			if(tempLocX == 0)
+			{
+				dispX = locX;
+				dispY = locY;
+			}
+			else
+			{
+				dispX = tempLocX;
+				dispY = tempLocY;
+			}
+			((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, f));
+			g.drawImage(tile.getImg(),(int)(dispX), (int)(dispY), null);
+			((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
 		}
+		
+	}
+
+	public void displayMovedTile(float x, float y) {
+		tempLocX = x;
+		tempLocY = y;
 		
 	}
 

@@ -17,7 +17,7 @@ public class Rules {
 	
     /**
      * Check if target clicked
-     * @param e mouse cilck event
+     * @param e mouse click event
      * @return true if menu clicked
      * @return false if menu not clicked
      * */

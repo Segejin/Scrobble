@@ -10,7 +10,7 @@ public class Over {
 	}
 		
 	/**
-     * Check if mouse clicked on sellected area 
+     * Check if mouse clicked on selected area 
      * @param e mouse event
      * @return true if area clicked
      * @return false if area not clicked
