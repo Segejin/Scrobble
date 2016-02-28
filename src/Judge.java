@@ -4,6 +4,8 @@
  * */
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -67,6 +69,7 @@ public class Judge{
 		for (Tile tile : tiles){
 			this.word += tile.getLetter();
 		}
+
 		return this.dict.contains(this.word);
 	}
 	

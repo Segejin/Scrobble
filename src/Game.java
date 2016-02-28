@@ -185,7 +185,10 @@ public class Game {
 							}
 							else if(tempList.contains(play_board.clickCheck(e).getSpotNum()))
 							{
-								if(play_board.clickCheck(e).getSpotNum()!=tempBoardCell.getSpotNum())
+								int tempSpotNum = play_board.clickCheck(e).getSpotNum();
+								if(tempSpotNum!=tempBoardCell.getSpotNum() 
+										&& (tempSpotNum == tempList.get(0)
+										|| tempSpotNum == tempList.get(tempList.size()-1)))
 								{
 									tempList.remove(tempList.indexOf(play_board.clickCheck(e).getSpotNum()));
 									System.out.println("removal accepted");
