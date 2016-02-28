@@ -1,7 +1,3 @@
-/**
- * This code was created by
- * Edited by Omar Alamoudi
- * */
 /*
  * Import related libraries
  * */

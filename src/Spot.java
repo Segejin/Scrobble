@@ -1,7 +1,3 @@
-/**
- * This code created by 
- * Documented by Omar Alamoudi
- * */
 import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -153,7 +149,7 @@ public class Spot {
      * @param f float
      * */
     public void displayTile(Graphics g, float f, boolean mouseState) {
-    	if(!mouseState)
+    	if(!mouseState)		//if mouseState is false (not clicked), display reimaged movement of tile
     	{
     		((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, f));
 			g.drawImage(tile.getImg(),(int)(locX*.7), (int)(locY*.7), null);

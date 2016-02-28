@@ -75,7 +75,6 @@ public class Game {
 	}
 
 	public boolean updateGame(Graphics g, boolean mouseState) {
-		//if(!mouseState)
 		play_board.displayBoard(g,tempList);
 		gui.updateDeckSize(pile.getSize());
 		if(turn) {
@@ -189,8 +188,6 @@ public class Game {
 					}
 					else
 					{
-						//tempBoardCell = play_board.clickCheck(e);
-						//if(tempBoardCell.getTile()!=null)
 						if(play_board.clickCheck(e)!=null)
 						{
 							if(verifySpot(play_board.clickCheck(e).getSpotNum()))

@@ -1,7 +1,3 @@
-/**
- * This code was created by Omar Alamoudi
- * edited by
- * */
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;

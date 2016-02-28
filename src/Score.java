@@ -1,7 +1,3 @@
-/*
- * This code is created by Omar Alamoudl
- * */
-
 import java.util.List;
 
 
