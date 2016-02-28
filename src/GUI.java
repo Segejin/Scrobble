@@ -29,13 +29,14 @@ public class GUI {
 	private String image_folder = "rec/image/";
 	private Shape undoPlacementSquare;
 	private Shape wordCheckSquare;
-	
+	private int deckSize;
 	private Color aColor;
 	private String aWord;
 	private int aScore;
 	public GUI(int score, int score2) {
 		aWord = "";
 		aScore = 0;
+		deckSize = 0;
 		aColor = Color.red;
 		scoreOne = score;
 		scoreTwo = score2;
@@ -53,6 +54,9 @@ public class GUI {
 	public void updateScore(int score1,int score2){
 			scoreOne = score1;
 			scoreTwo = score2;
+	}
+	public void updateDeckSize(int deckSize){
+		this.deckSize = deckSize;
 	}
 	public boolean clickCheckEnd(MouseEvent e) {
 		if(endTurnSquare.contains(e.getPoint()))
@@ -84,6 +88,13 @@ public class GUI {
 		g.drawString("Player 1: " + Integer.toString(scoreOne), (int)(585),(int)(107));
 		g.drawString("Player 2: " + Integer.toString(scoreTwo), (int)(585),(int)(207));
 		g.drawImage(img, (int)(810*.7f), (int)(765*.7f), null);
+		
+		g.setFont(new Font("Arial Black", Font.PLAIN, 25));
+		g.setColor(Color.BLACK);
+		g.drawString("Deck Tiles: " + deckSize, (int)(587),(int)(254));
+		g.setColor(SCORE_COLOR);
+		g.drawString("Deck Tiles: " + deckSize, (int)(587),(int)(257));
+		g.setColor(SCORE_COLOR);
 		
 		//undo button
 		((Graphics2D) g).draw(undoPlacementSquare);

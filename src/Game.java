@@ -71,6 +71,7 @@ public class Game {
 
 	public boolean updateGame(Graphics g) {
 		play_board.displayBoard(g,tempList);
+		gui.updateDeckSize(pile.getSize());
 		if(turn) {
 			gui.displayTurnOne(g);
 			player_one.displayHand(g);

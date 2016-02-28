@@ -118,6 +118,9 @@ public class Deck {
      * Check if the deck is empty
      * @return true if deck is empty, false if deck hold something
      * */
+	public int getSize(){
+		return deck.size();
+	}
 	public boolean isEmpty() {
 		if (this.deck.isEmpty()) {
 			return true;
