@@ -75,7 +75,7 @@ public class Tile {
      * */
 	public Image getImg(){
 		return this.img;
-	}i
+	}
 
     /**
      * Get Grey image
