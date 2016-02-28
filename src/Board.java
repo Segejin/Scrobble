@@ -20,7 +20,7 @@ public class Board {
         this.board = new Spot[7][7];
 		float x = 16;
 		float y = 16;
-		int k = 0;
+		int k = 1;
 		for(int i = 0; i<7;i++)
 		{
 			for(int j = 0; j<7;j++)

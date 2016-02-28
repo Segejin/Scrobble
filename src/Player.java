@@ -33,7 +33,7 @@ public class Player {
 		int y = 790;
 		for(int j = 1; j<8;j++)
 		{
-			this.hand.add(new Spot(x,y,null,48+j));
+			this.hand.add(new Spot(x,y,null,49+j));
 			x+=107.2;
 		}
 		this.score = 0;
