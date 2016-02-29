@@ -133,7 +133,8 @@ public class Driver extends Applet implements Runnable, MouseListener {
 		{
 			game.displayMovingTile(frame.getX(),frame.getY());
 		}
-		repaint();
+		if(game.updateGui)
+			repaint();
 		return true;
 	}
 
@@ -344,7 +345,7 @@ public class Driver extends Applet implements Runnable, MouseListener {
 
 	public static void main(String[] args) throws IOException {
 		 frame = new JFrame();
-		 frame.setSize((int)(856),(int)(700));
+		 frame.setSize((int)(1200*.7),(int)(900*.7));
 		 Scanner in = new Scanner(System.in);
 		 final Applet applet = new Driver(in);
 
