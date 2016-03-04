@@ -95,6 +95,10 @@ public class Deck {
 		Collections.shuffle(this.deck);
 	}
 	
+	public void handToDeck(Spot card) {
+		addCard(card.getTile());
+	}
+	
     /**
      * Add a card to the deck
      * @param card as tile 
